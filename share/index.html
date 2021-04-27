@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Share WOWidget</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://wowidget.github.io/share" rel="canonical">
+    <meta name="robots" content="noindex">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EFLJ4WLJ5"></script>
+    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-7EFLJ4WLJ5");</script>
+</head>
+<body>
+
+    <p>
+        Open <a id="link" href="wowidget://">WOWidget app</a> or download WOWidget:
+    </p>
+
+    <a href="https://apps.apple.com/app/apple-store/id1515009616?pt=314498&ct=Share&mt=8" target="_blank"><img src="/images/app-store.png" alt="Download WOWidget from App Store" width="250" height="83"></a>
+
+    <script>
+        // window.addEventListener("focus", () => {
+        //     clearTimeout(timer);
+        // });
+
+        // window.addEventListener("blur", () => {
+        //     clearTimeout(timer);
+        // });
+
+        // window.addEventListener("visibilitychange", (e) => {
+        //     if (e.target.visibilityState == "hidden") {
+        //         clearTimeout(timer);
+        //     }
+        // });
+
+        let base64separator = "-";
+        if (window.location.search) {
+            url = "wowidget://share/" + window.location.search.replace(base64separator, "");
+        } else {
+            url = "wowidget:/" + window.location.pathname.replace(base64separator, "");
+        }
+        document.getElementById("link").href = url;
+
+        // let timer = setTimeout(function() {
+        //     window.location = "https://apps.apple.com/app/apple-store/id1515009616?pt=314498&ct=Share&mt=8";
+        // }, 100);
+        window.location = url;
+    </script>
+
+</body>
+</html>

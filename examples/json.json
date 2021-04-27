@@ -1,0 +1,35 @@
+{
+    "Number": 12345,
+    "Emoji": "😃",
+    "String": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Objects": [
+        { "Name": "Value 1" },
+        { "Name": "Value 2" },
+        { "Name": "Value 3" }
+    ],
+    "Days and months": [
+        [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ]
+    ]
+}

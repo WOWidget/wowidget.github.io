@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>WOWClock</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<link href="https://wowidget.github.io/tools/wowclock/share" rel="canonical">
+	<meta name="robots" content="noindex">
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body
+        {
+            background: transparent;
+        }
+
+        :root {
+            --light: #fff;
+            --dark: #000;
+            --lighter-dark: #999;
+            --seconds-color: #f00;
+            --line: #ddd;
+            user-select: none;
+        }
+
+        body {
+            color: var(--dark);
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: solid 1px var(--line);
+            height: 111px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .label {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 0.9;
+        }
+
+        .label small {
+            font-weight: 300;
+            font-size: 0.7em;
+        }
+
+        svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        svg > g {
+            transform: translate(50%, 50%);
+            fill: var(--light);
+        }
+
+        circle {
+            stroke: var(--dark);
+            stroke-width: 1.5%;
+        }
+
+        .numbers {
+            transform: translate(0, 6px);
+            font-size: 12px;
+        }
+
+        .numbers > text {
+            fill: var(--dark);
+            text-anchor: middle;
+        }
+
+        .marks > line {
+            stroke: var(--lighter-dark);
+        }
+
+        .hands {
+            stroke: var(--dark);
+            transform: rotate(-90deg);
+        }
+
+        .hour > line {
+            animation-duration: 86400s;
+            stroke-width: 3%;
+        }
+
+        .minute > line {
+            animation-duration: 3600s;
+            stroke-width: 3%;
+        }
+
+        .second > line {
+            animation-duration: 60s;
+            stroke: var(--seconds-color);
+            stroke-width: 1%;
+        }
+
+        /* Digital */
+
+        .digital {
+            white-space: nowrap;
+        }
+
+        .digital div {
+            text-align: left;
+            position: relative;
+            width: 28px;
+            height: 50px;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .digital span {
+            opacity: 0;
+            position: absolute;
+            transition: 0.25s;
+            background-color: var(--dark);
+            border-color: var(--dark);
+        }
+
+        .digital span:before,
+        .digital span:after
+        {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+        }
+
+        .digital .d1 {
+            height: 5px;
+            width: 16px;
+            top: 0;
+            left: 6px;
+        }
+
+        .digital .d1:before {
+            border-width: 0 5px 5px 0;
+            border-right-color: inherit;
+            left: -5px;
+        }
+
+        .digital .d1:after {
+            border-width: 0 0 5px 5px;
+            border-left-color: inherit;
+            right: -5px;
+        }
+
+        .digital .d2 {
+            height: 5px;
+            width: 16px;
+            top: 24px;
+            left: 6px;
+        }
+
+        .digital .d2:before {
+            border-width: 3px 4px 2px;
+            border-right-color: inherit;
+            left: -8px;
+        }
+
+        .digital .d2:after {
+            border-width: 3px 4px 2px;
+            border-left-color: inherit;
+            right: -8px;
+        }
+
+        .digital .d3 {
+            height: 5px;
+            width: 16px;
+            top: 48px;
+            left: 6px;
+        }
+
+        .digital .d3:before {
+            border-width: 5px 5px 0 0;
+            border-right-color: inherit;
+            left: -5px;
+        }
+
+        .digital .d3:after {
+            border-width: 5px 0 0 5px;
+            border-left-color: inherit;
+            right: -5px;
+        }
+
+        .digital .d4 {
+            width: 5px;
+            height: 14px;
+            top: 7px;
+            left: 0;
+        }
+
+        .digital .d4:before {
+            border-width: 0 5px 5px 0;
+            border-bottom-color: inherit;
+            top: -5px;
+        }
+
+        .digital .d4:after {
+            border-width: 0 0 5px 5px;
+            border-left-color: inherit;
+            bottom: -5px;
+        }
+
+        .digital .d5 {
+            width: 5px;
+            height: 14px;
+            top: 7px;
+            right: 0;
+        }
+
+        .digital .d5:before {
+            border-width: 0 0 5px 5px;
+            border-bottom-color: inherit;
+            top: -5px;
+        }
+
+        .digital .d5:after {
+            border-width: 5px 0 0 5px;
+            border-top-color: inherit;
+            bottom: -5px;
+        }
+
+        .digital .d6 {
+            width: 5px;
+            height: 14px;
+            top: 32px;
+            left: 0;
+        }
+
+        .digital .d6:before {
+            border-width: 0 5px 5px 0;
+            border-bottom-color: inherit;
+            top: -5px;
+        }
+
+        .digital .d6:after {
+            border-width: 0 0 5px 5px;
+            border-left-color: inherit;
+            bottom: -5px;
+        }
+
+        .digital .d7 {
+            width: 5px;
+            height: 14px;
+            top: 32px;
+            right: 0;
+        }
+
+        .digital .d7:before {
+            border-width: 0 0 5px 5px;
+            border-bottom-color: inherit;
+            top: -5px;
+        }
+
+        .digital .d7:after {
+            border-width: 5px 0 0 5px;
+            border-top-color: inherit;
+            bottom: -5px;
+        }
+
+        .digit0 .d1,
+        .digit0 .d3,
+        .digit0 .d4,
+        .digit0 .d5,
+        .digit0 .d6,
+        .digit0 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit1 .d5,
+        .digit1 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit2 .d1,
+        .digit2 .d5,
+        .digit2 .d2,
+        .digit2 .d6,
+        .digit2 .d3
+        {
+            opacity: 1;
+        }
+
+        .digit3 .d1,
+        .digit3 .d5,
+        .digit3 .d2,
+        .digit3 .d7,
+        .digit3 .d3
+        {
+            opacity: 1;
+        }
+
+        .digit4 .d5,
+        .digit4 .d2,
+        .digit4 .d4,
+        .digit4 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit5 .d1,
+        .digit5 .d2,
+        .digit5 .d4,
+        .digit5 .d3,
+        .digit5 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit6 .d1,
+        .digit6 .d2,
+        .digit6 .d4,
+        .digit6 .d3,
+        .digit6 .d6,
+        .digit6 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit7 .d1,
+        .digit7 .d5,
+        .digit7 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit8 .d1,
+        .digit8 .d2,
+        .digit8 .d3,
+        .digit8 .d4,
+        .digit8 .d5,
+        .digit8 .d6,
+        .digit8 .d7
+        {
+            opacity: 1;
+        }
+
+        .digit9 .d1,
+        .digit9 .d2,
+        .digit9 .d3,
+        .digit9 .d4,
+        .digit9 .d5,
+        .digit9 .d7
+        {
+            opacity: 1;
+        }
+
+        .digital .dots {
+            width: 5px;
+        }
+
+        .digital .dots:before,
+        .digital .dots:after
+        {
+            background-color: var(--dark);
+            width: 5px;
+            height: 5px;
+            content: "";
+            position: absolute;
+            left: 0;
+        }
+
+        .digital .dots:before {
+            top: 14px;
+        }
+
+        .digital .dots:after {
+            top: 34px;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+
+        // Alternative design: https://codepen.io/nicolazj/pen/PwjxYN
+
+        function createRow(title, subTitle) {
+            let row = document.createElement("div");
+            document.body.appendChild(row);
+            row.setAttribute("class", "row");
+
+            let label = document.createElement("div");
+            row.appendChild(label);
+            label.setAttribute("class", "label");
+            label.innerHTML = `${title}<br><small>${subTitle}</small>`;
+
+            let analog = document.createElement("div");
+            row.appendChild(analog);
+            analog.setAttribute("class", "analog");
+            analog.style.display = "none";
+
+            let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            analog.appendChild(svg);
+
+            let clockFace = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            svg.appendChild(clockFace);
+
+            let outerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            clockFace.appendChild(outerCircle);
+            outerCircle.setAttribute("r", "49%");
+
+            let numbers = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            clockFace.appendChild(numbers);
+            numbers.setAttribute("class", "numbers");
+
+            let marks = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            clockFace.appendChild(marks);
+            marks.setAttribute("class", "marks");
+
+            let hands = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            clockFace.appendChild(hands);
+            hands.setAttribute("class", "hands");
+
+            let hour = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            hands.appendChild(hour);
+            hour.setAttribute("class", "hour");
+
+            let hourHand = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            hour.appendChild(hourHand);
+            hourHand.setAttribute("x1", 0);
+            hourHand.setAttribute("y1", 0);
+            hourHand.setAttribute("x2", "25%");
+            hourHand.setAttribute("y2", 0);
+
+            let minute = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            hands.appendChild(minute);
+            minute.setAttribute("class", "minute");
+
+            let minuteHand = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            minute.appendChild(minuteHand);
+            minuteHand.setAttribute("x1", "-3.5%");
+            minuteHand.setAttribute("y1", 0);
+            minuteHand.setAttribute("x2", "35%");
+            minuteHand.setAttribute("y2", 0);
+
+            let second = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            hands.appendChild(second);
+            second.setAttribute("class", "second");
+
+            let secondHand = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            second.appendChild(secondHand);
+            secondHand.setAttribute("x1", "-5%");
+            secondHand.setAttribute("y1", 0);
+            secondHand.setAttribute("x2", "45%");
+            secondHand.setAttribute("y2", 0);
+
+            let handsCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            clockFace.appendChild(handsCircle);
+            handsCircle.setAttribute("r", "2%");
+
+            let digital = document.createElement("div");
+            row.appendChild(digital);
+            digital.setAttribute("class", "digital");
+            digital.style.display = "none";
+            
+            giditalDigit(digital);
+            giditalDigit(digital);
+            digitalDots(digital);
+            giditalDigit(digital);
+            giditalDigit(digital);
+
+            return row;
+        }
+
+        function giditalDigit(parent) {
+            let digit = document.createElement("div");
+            parent.appendChild(digit);
+
+            let d1 = document.createElement("span");
+            digit.appendChild(d1);
+            d1.setAttribute("class", "d1");
+
+            let d2 = document.createElement("span");
+            digit.appendChild(d2);
+            d2.setAttribute("class", "d2");
+
+            let d3 = document.createElement("span");
+            digit.appendChild(d3);
+            d3.setAttribute("class", "d3");
+
+            let d4 = document.createElement("span");
+            digit.appendChild(d4);
+            d4.setAttribute("class", "d4");
+
+            let d5 = document.createElement("span");
+            digit.appendChild(d5);
+            d5.setAttribute("class", "d5");
+
+            let d6 = document.createElement("span");
+            digit.appendChild(d6);
+            d6.setAttribute("class", "d6");
+
+            let d7 = document.createElement("span");
+            digit.appendChild(d7);
+            d7.setAttribute("class", "d7");
+        }
+        
+        function digitalDots(parent) {
+            let dots = document.createElement("div");
+            parent.appendChild(dots);
+            dots.setAttribute("class", "dots");
+        }
+
+        function setClock(el, date) {
+            let seconds = (date.getSeconds() + date.getMilliseconds() / 1000) / 60;
+            let minutes = (date.getMinutes() + seconds) / 60;
+            let hours = (date.getHours() % 12 + minutes) / 12;
+            el.querySelector('.second').setAttribute("transform", `rotate(${seconds * 360})`);
+            el.querySelector('.minute').setAttribute("transform", `rotate(${minutes * 360})`);
+            el.querySelector('.hour').setAttribute("transform", `rotate(${hours * 360})`);
+        }
+
+        function generateNumbers(clock) {
+            var radius = 31;
+            let numbers = clock.querySelector(".numbers");
+            let marks = clock.querySelector(".marks");
+            for (var i = 0; i < 12; i++) {
+                let angle = Math.PI / 6 * i;
+                let number = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                number.setAttribute("x", radius * Math.cos(angle));
+                number.setAttribute("y", radius * Math.sin(angle) - 1);
+                number.innerHTML = ((i + 2) % 12 + 1);
+                numbers.appendChild(number);
+
+                // 5 minutes mark
+                let rotation = i * 30;
+                createMark(marks, radius * 0.70, 0.85, rotation);
+
+                // 1 minute marks
+                for (j = 1; j < 5; j++) {
+                    createMark(marks, radius * 0.7, 0.98,  rotation + j * 6);
+                }
+            }
+        }
+
+        function createMark(marks, radius, length, rotation) {
+            var mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            mark.setAttribute("x1", radius * length);
+            mark.setAttribute("x2", radius);
+            mark.setAttribute("y1", "0");
+            mark.setAttribute("y2", "0");
+            mark.setAttribute("transform", "rotate(" + rotation + ")");
+            marks.appendChild(mark);
+        }
+
+
+        function setDigital(el, date) {
+            let h1 = Math.floor(date.getHours() / 10);
+            let h2 = date.getHours() % 10;
+
+            let m1 = Math.floor(date.getMinutes() / 10);
+            let m2 = date.getMinutes() % 10;
+
+            let digits = el.querySelectorAll("div:not(.dots)");
+            digits[0].setAttribute("class", "digit" + h1);
+            digits[1].setAttribute("class", "digit" + h2);
+            digits[2].setAttribute("class", "digit" + m1);
+            digits[3].setAttribute("class", "digit" + m2);
+        }
+
+        function toogle(row) {
+            let analog = row.querySelector(".analog");
+            let digital = row.querySelector(".digital");
+
+            analog.style.display = (analog.style.display === "none") ? "block" : "none";
+            digital.style.display = (digital.style.display === "none") ? "block" : "none";
+        }
+
+        function parseIanaName(ianaName) {
+            let parts = ianaName.split("_").join(" ").split("/");
+            let name = parts[1] ? parts[1] : parts[0];
+            return name;
+        }
+
+        if (window.location.search != "") {
+            let data = window.location.search.substring(1).split(",");
+            data.forEach((d) => {
+                d = decodeURIComponent(d).split("|");
+                
+                let row = createRow(parseIanaName(d[0]), d[1]);
+                let analog = row.querySelector(".analog");
+                generateNumbers(analog.querySelector("svg"));
+                let timeZone = d[0];
+                let digital = row.querySelector(".digital");
+
+                if (d[2] == 1) {
+                    analog.style.display = "block";
+                } else {
+                    digital.style.display = "block";
+                }
+
+                analog.onclick = (e) => {
+                    toogle(e.target.closest(".row"));
+                }
+
+                digital.onclick = (e) => {
+                    toogle(e.target.closest(".row"));
+                }
+
+                setInterval(() => {
+                    let date = new Date((new Date()).toLocaleString("en-US", {timeZone: timeZone}));
+                    setClock(analog, date);
+                    setDigital(digital, date);
+                }, 100);
+            });
+        }
+
+    </script>
+
+</body>
+</html>
