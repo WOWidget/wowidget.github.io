@@ -3,9 +3,11 @@ layout: post
 title: "Marketing"
 ---
 
-<a href="https://analytics.itunes.apple.com/#/campaigngenerator" target="_blank">Apple Campaign link generator</a>
-
 <p>
+    AppStore tracking links cheat sheet for better <a href="https://developer.apple.com/app-store/measuring-app-performance/" target="_blank">Apple Analitics</a>.
+</p>
+
+<pre>
     pt = Provider ID
     ct = campaign token
     mt = (media type?) 
@@ -21,7 +23,6 @@ title: "Marketing"
     10  iTunes U
     11  E-Books
     12  Desktop Apps
-</p>
+</pre>
 
-<a href="https://geniuslink.com/blog/parameter-cheat-sheet-for-itunes-and-app-store-links/" target="_blank">Parameter chat sheet for itunes and app store links</a>
-
+<a href="https://geniuslink.com/blog/parameter-cheat-sheet-for-itunes-and-app-store-links/" target="_blank">Parameter cheat sheet for itunes and app store links</a>
