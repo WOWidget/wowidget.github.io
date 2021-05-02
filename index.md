@@ -2,18 +2,28 @@
 layout: default
 ---
 
-<h1>WOWidget</h1>
+<div id="hero">
+    <div id="fold">
+        <h1>
+            <span>Turn any</span>
+            <span class="hero-color">website into</span>
+            <span>a widget</span>
+        </h1>
 
-<img src="/images/logo.png" width="90" height="90" alt="WOWidget app icon">
-
-<blockquote>„Turn any website into a widget.” ™</blockquote>
-
-<h2>What <small>is it</small></h2>
-<p>
-    FREE application for iPhone and iPad to create custom widgets.<br>
-    Or simply put: A web browser in a widget.
-</p>
-
+        <p>
+            WOWidget is a FREE application for iPhone and iPad to create custom widgets.<br>
+            Or simply put: A web browser in a widget.
+        </p>
+        <p>
+            <a href="https://apps.apple.com/app/apple-store/id1515009616?pt=314498&ct=Website&mt=8" target="_blank"><img src="https://wowidget.github.io/images/app-store.png" alt="Download WOWidget from App Store" width="248" height="83"></a>
+        </p>
+    </div>
+    <script>
+        const cssVar = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        document.getElementById("fold").style.minHeight = window.innerHeight - parseInt(cssVar("--header-height"), 10) - parseInt(cssVar("--padding"), 10) + "px";
+    </script>
+</div>
+    
 <h2>Why <small>should I use it</small></h2>
 <ul>
     <li>You need fresh information and want to see it within a widget.</li>
@@ -43,8 +53,8 @@ layout: default
 -->
 {% endcomment %}
 
-<a href="https://www.producthunt.com/posts/wowidget/" target="_blank"><img src="https://wowidget.github.io/images/product-hunt.png" alt="Product hunt" width="327" height="83"></a>
-
-<p>
-    <img src="/images/endorsement.png" width="430" height="129" alt="The best widget app." style="max-width:430px;width:100%;height:auto;">
+<p style="text-align:center;margin-top:2em;">
+    <img src="/images/endorsement.png" width="430" height="129" alt="The best widget app." style="display:inline-block;max-width:327px;width:100%;height:auto;border-radius:15px;">
+    <br><br>
+    <a href="https://www.producthunt.com/posts/wowidget/" target="_blank"><img src="https://wowidget.github.io/images/product-hunt.png" alt="Product hunt" width="327" height="83" style="max-width:327px;width:100%;height:auto;"></a>
 </p>

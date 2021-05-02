@@ -1,6 +1,6 @@
 ---
 layout: use-case
-title: "Use case: Create your own"
+title: "Create your own"
 ---
 
 <h1>Create your own widget</h1>

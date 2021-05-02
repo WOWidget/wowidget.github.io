@@ -1,8 +1,9 @@
 ---
 layout: default
+title: "Blog"
 ---
 
-<h1>WOWidget blog</h1>
+<h1>Blog</h1>
 
 <ul>
   {% for post in site.posts %}

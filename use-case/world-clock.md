@@ -1,6 +1,6 @@
 ---
 layout: use-case
-title: "Use case: World clock"
+title: "World clock"
 ---
 
 <p>

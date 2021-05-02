@@ -1,6 +1,6 @@
 ---
 layout: use-case
-title: "Use case: Launcher"
+title: "Launcher"
 ---
 
 <p>

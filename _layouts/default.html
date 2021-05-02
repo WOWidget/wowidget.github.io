@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
 {%- include head.html -%}
+
 </head>
 <body>
-{%- include top.html -%}
-{{ content }}  
-{%- include footer.html -%}
+    <div id="screen">
+        {%- include top.html -%}
+        <main>
+            {{ content }}
+        </main>
+    </div>
+    {%- include footer.html -%}
 </body>
 </html>

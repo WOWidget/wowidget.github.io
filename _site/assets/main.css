@@ -1,0 +1,340 @@
+:root {
+    --header-height: 60px;
+    --page-width: 1048px;
+    --padding: 24px;
+}
+
+::selection {
+    background-color: #f81ce5;
+    color: #fff;
+}
+
+::-moz-selection {
+    background-color: #f81ce5;
+    color: #fff;
+}
+
+.no-selection {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    user-select: none;
+}
+
+html, body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #fff;
+    scroll-padding-top: var(--header-height);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+}
+
+textarea {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+    background-color: #000;
+}
+
+a {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    color: #fff;
+    transition: color 0.1s ease;
+    /*text-decoration: none;*/
+    cursor: pointer;
+    outline: none;
+}
+
+a:hover {
+    color: #fed501;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.6em 0.8em;
+    text-transform: capitalize;
+
+    appearance: none;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 5px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #fff;
+    transition: all 0.2s ease 0s;
+    user-select: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus,
+.btn:focus-within {
+    color: #fff;
+    background-color: #000;
+    border-color: #fff;
+}
+
+#header-wrapper {
+    box-shadow: inset 0 -1px 0 0 hsla(0, 0%, 100%, 0.1);
+    transition: box-shadow .2s ease 0s;
+    -webkit-backdrop-filter: saturate(180%) blur(5px);
+    backdrop-filter: saturate(180%) blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    z-index: 101;
+    min-height: var(--header-height);
+}
+
+header {
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: var(--page-width);
+    margin: auto;
+    padding: 0 var(--padding);
+}
+
+.header__left,
+.header__right {
+    flex: 1 1;
+}
+
+.header__right {
+    text-align: right;
+}
+
+#logo {
+    font-size: 1.4em;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+}
+
+#logo img {
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.header__right a {
+    padding: 1em;
+    vertical-align: middle;
+    color: #888;
+    text-decoration: none;
+}
+
+.header__right a:hover {
+    color: #fff;
+}
+
+.header__right .btn {
+    margin-left: 1em;
+    padding: 0.6em 0.8em;
+}
+
+#screen {
+    min-height: 100vh;
+}
+
+main {
+    max-width: 100%;
+    width: var(--page-width);
+    margin: auto;
+    padding: var(--padding);
+    box-sizing: border-box;
+}
+
+#hero {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-width: 1px;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+#hero p {
+    text-align: center;
+    margin: 3em 0;
+    font-size: 1.5em;
+    font-weight: 400;
+    /*letter-spacing: -0.01em;*/
+    line-height: 1.5;
+}
+
+h1 {
+    margin: 0.2em 0 0.5em;
+    font-size: 10em;
+    line-height: 1;
+}
+
+h1 span {
+    display: block;
+}
+
+h1 span.hero-color {
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(94.75deg, rgb(35, 140, 248) 0%, rgb(241, 85, 217) 30%, rgb(194, 0, 255) 50%, rgb(250, 17, 79) 70%, rgb(255, 117, 0) 90%, rgb(255, 191, 34) 100%);
+}
+
+h1 span.hero-color::selection {
+    -webkit-text-fill-color: rgb(194, 0, 255);
+}
+
+h1 span.hero-color::-moz-selection {
+    -webkit-text-fill-color: rgb(194, 0, 255);
+}
+
+h1 strong {
+    color: #7af349;
+    text-decoration: underline;
+    text-decoration-thickness: 0.05em;
+    text-decoration-style: wavy;
+    text-underline-offset: 0.1em;
+}
+
+h1 strong::selection {
+    text-decoration-color: transparent;
+}
+
+#post h1,
+#use-case h1 {
+    font-size: 3em;
+}
+
+.hero-buttons {
+    margin: var(--padding) 0;
+    margin-bottom: 38px; /* extra space to compensate for space below g in the last row of h1 */
+    text-align: center;
+    font-size: 1.5em;
+}
+
+li {
+    color: #888;
+}
+
+p {
+    margin: var(--padding) 0;
+    color: #888;
+}
+
+p strong {
+    color: #fff;
+}
+
+footer {
+    font-size: 0.8em;
+    color: #888;
+    background-color: #111;
+    border-top: solid 1px #333;
+    padding: var(--padding);
+    margin-top: var(--padding);
+}
+
+footer section {
+    max-width: var(--page-width);
+    margin: auto;
+    padding: var(--padding) 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+footer section div {
+    flex: 1 1;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer a {
+    display: inline-block;
+    padding: 0.2em 0;
+    color: #888;
+}
+
+#form-wrapper {
+    margin-top: var(--padding);
+    text-align: center;
+}
+
+@media only screen and (max-width: 1048px) {
+    :root {
+        --page-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    h1 {
+        font-size: 8em;
+    }
+
+    #hero p {
+        font-size: 1em;
+    }
+
+    footer section {
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    h1 {
+        font-size: 6em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    h1 {
+        font-size: 5em;
+    }
+
+    footer section {
+        display: block;
+    }
+    
+    footer ul {
+        margin: 1em 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    h1 {
+        font-size: 4em;
+    }
+
+    .header__right {
+        display: none;
+    }
+
+    .header__left {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    h1 {
+        font-size: 3em;
+    }
+}

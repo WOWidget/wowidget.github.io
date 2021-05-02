@@ -3,9 +3,7 @@ layout: default
 title: "Use case"
 ---
 
-<a href="/">Home</a>
-
-<h1>WOWidget use cases</h1>
+<h1>Use cases</h1>
 
 <ul>
     <li><a href="/use-case/news">News</a></li>
