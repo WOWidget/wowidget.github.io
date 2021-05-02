@@ -25,13 +25,26 @@
             </a>
         </div>
         <div class="header__right">
-            <a href="/use-case">Use cases</a>
-            <a href="/blog">Blog</a>
-            <a href="/pages/faq">FAQ</a>
+            <div id="menu-button">
+                <span class="menu-first"></span>
+                <span class="menu-last"></span>
+            </div>
+            <nav id="menu">
+                <a href="/use-case">Use cases</a>
+                <a href="/blog">Blog</a>
+                <a href="/pages/faq">FAQ</a>
+            </nav>
         </div>
     </header>
 </div>
-<main>
+
+<script>
+    let wrapper = document.getElementById("header-wrapper");
+    let menu = document.getElementById("menu-button");
+    menu.addEventListener("click", _ => {
+        wrapper.classList.toggle("open");
+    });
+</script><main>
             <h1>WOWidget via Safari share extension</h1>
 
 <ol>
