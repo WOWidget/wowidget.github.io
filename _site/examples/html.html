@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" style="background:transparent;">
+<head>
+    <meta charset="utf-8">
+    <title>Widget title</title>
+    <meta name="robots" content="noindex">
+    <meta name="format-detection" content="telephone=no">
+    <!-- https://web.dev/color-scheme/ -->
+    <meta name="color-scheme" content="light dark">
+    <style>
+        /* https://web.dev/color-scheme/ */
+        :root {
+            color-scheme: light dark;
+        }
+        * {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 128px;
+
+            -webkit-touch-callout: none; /* iOS Safari */
+            touch-action: none; /* iOS Safari 13 */
+
+            user-select: none;
+        }
+        ::selection {
+            background: transparent;
+            color: transparent;
+        }
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #f00;
+            }
+        }
+    </style>
+</head>
+<body>
+    Current time:
+    <div id="time">00:00:00</div>
+    <script>
+        let el = document.getElementById('time');
+        setInterval(() => {
+            el.innerText = (new Date()).toLocaleTimeString();
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>WOWidget</string>
+	<key>CapeName</key>
+	<string>Recording Simulator</string>
+	<key>CapeVersion</key>
+	<real>1</real>
+	<key>Cloud</key>
+	<false/>
+	<key>Cursors</key>
+	<dict>
+		<key>com.apple.coregraphics.Arrow</key>
+		<dict>
+			<key>FrameCount</key>
+			<integer>1</integer>
+			<key>FrameDuration</key>
+			<real>1</real>
+			<key>HotSpotX</key>
+			<real>15</real>
+			<key>HotSpotY</key>
+			<real>15</real>
+			<key>PointsHigh</key>
+			<real>30</real>
+			<key>PointsWide</key>
+			<real>30</real>
+			<key>Representations</key>
+			<array>
+				<data>
+				iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6i
+				AAAABGdBTUEAA1teXP8meAAAAERlWElmTU0AKgAAAAgA
+				AYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKAC
+				AAQAAAABAAAAHqADAAQAAAABAAAAHgAAAADKQTcFAAAB
+				30lEQVRIDc2XSUsDQRCF4w6KoiDumh+gJ2968scL4sWT
+				/gAFUVBR3HADfV+lq0mGSWaxJ/rgTXd6qutNV2+VVuuP
+				MFJSd1x2C+JWKKdVTojgU3wV78WLUH6pHIgiYd6vizvi
+				jFhk/y2bF/FUvBT5nYtBjubUY0+cze1Z3PgkkyPxMc90
+				LK9RbWvivkhI62JKHTdFhJ+zTvKEV2WEKPP6W+Af8Qex
+				RzwrTHhTicqVgelcFq/Fd2vRY9Qroc6cEqLUwCe+o16s
+				qJHVW3chqWsh8I2GwYWZz+3Q1mSBhq0dF+ZwYJ82DTTQ
+				ijFvqz5oT2ObAmigFYXnU3gt6cO0fK9WPSg4FE6C0K5K
+				tmFZmJbPsR/4ZTsjehvoH1C2r2m5cNlOyexcmKutCgjv
+				YiD1KjAtn2Pu08kKvZnTgwr23aZoxVXNIT4smJaH+lyq
+				fS/thF+EBlpxxKQtZA5NAw20ojA50hkNDQMNy8c81OiR
+				I5GuNAV8o2HoTgSI/424IfpqN6MEDxKAQ/HNfXUL04YB
+				KQriqS4NBnQs3okRWWFeEBKW/IqY917NpfEhS0Svsj36
+				OWbUGC+JdVMhBkB4e0aq34aicPKedGWoCX3n0zpPFhv3
+				aFskg+j3F4bDgWmyLaPy/+EHz/lP4eYFOn4AAAAASUVO
+				RK5CYII=
+				</data>
+			</array>
+		</dict>
+	</dict>
+	<key>HiDPI</key>
+	<true/>
+	<key>Identifier</key>
+	<string>com.wowidget</string>
+	<key>MinimumVersion</key>
+	<real>2</real>
+	<key>Version</key>
+	<real>2</real>
+</dict>
+</plist>

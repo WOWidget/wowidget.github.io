@@ -1,103 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>Share URL tool</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link href="https://wowidget.github.io/tools/wowlauncher/share" rel="canonical">
-	<meta name="robots" content="noindex">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <style>
-        * {
-            background: transparent;
-            padding: 0;
-            margin: 0;
-        }
-        body {
-            display: flex;
-            flex: 1;
-            flex-wrap: wrap;
-        }
-        a {
-            display: inline-block;
-            width: 20%;
-            max-width: 150px;
-        }
-        img {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-    </style>
-</head>
-<body>
-    Loading ...
-    <script>
-        let request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
-            if (request.readyState !== XMLHttpRequest.DONE) {
-                return;
-            }
-            
-            if (request.status !== 200) {
-                console.error("Request failed. Status code: " + request.status);
-                return;
-            }
+---
+layout: empty
+title: "Share URL tool"
+---
 
-            try {
-                let json = JSON.parse(request.responseText);
-                loadApps(json);
-            } catch(e) {
-                console.error("JSON error.\n" + e);
-            }
+<style>
+    * {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+    }
+    a {
+        display: inline-block;
+        width: 20%;
+        max-width: 150px;
+    }
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+Loading ...
+
+<script>
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState !== XMLHttpRequest.DONE) {
+            return;
         }
-        request.addEventListener("error", () => {
-            console.error("Request failed");
-        });
+        
+        if (request.status !== 200) {
+            console.error("Request failed. Status code: " + request.status);
+            return;
+        }
 
         try {
-            request.open("GET", "https://wowidget.github.io/tools/wowlauncher/apps.json", true);
-            request.send();
+            let json = JSON.parse(request.responseText);
+            loadApps(json);
         } catch(e) {
-            console.error("Request failed");
+            console.error("JSON error.\n" + e);
+        }
+    }
+    request.addEventListener("error", () => {
+        console.error("Request failed");
+    });
+
+    try {
+        request.open("GET", "https://wowidget.github.io/tools/wowlauncher/apps.json", true);
+        request.send();
+    } catch(e) {
+        console.error("Request failed");
+    }
+
+    function loadApps(json) {
+        let apps = window.location.search.substring(1).split(",");
+
+        if (apps.length <= 1) {
+            document.write("No apps selected.");
+            return;
         }
 
-        function loadApps(json) {
-            let apps = window.location.search.substring(1).split(",");
+        document.body.innerHTML = "";
 
-            if (apps.length <= 1) {
-                document.write("No apps selected.");
-                return;
+        apps.forEach(app => {
+            let scheme = decodeURIComponent(app);
+            if (json.hasOwnProperty(scheme)) {
+                create(scheme, json[scheme]);
             }
+        });
+    }
 
-            document.body.innerHTML = "";
-
-            apps.forEach(app => {
-                let scheme = decodeURIComponent(app);
-                if (json.hasOwnProperty(scheme)) {
-                    create(scheme, json[scheme]);
-                }
-            });
+    function create(scheme, app) {
+        if (!scheme || !app.name || (!app.icon && !app.data)) {
+            return;
         }
-
-        function create(scheme, app) {
-            if (!scheme || !app.name || (!app.icon && !app.data)) {
-                return;
-            }
-            let a = document.createElement("a");
-            a.href = scheme;
-            let img = document.createElement("img");
-            if (app.data) {
-                img.src = app.data;
-            } else {
-                img.src = app.icon;
-            }
-            a.appendChild(img);
-            document.body.appendChild(a);
+        let a = document.createElement("a");
+        a.href = scheme;
+        let img = document.createElement("img");
+        if (app.data) {
+            img.src = app.data;
+        } else {
+            img.src = app.icon;
         }
-    </script>
-</body>
-</html>
+        a.appendChild(img);
+        document.body.appendChild(a);
+    }
+</script>

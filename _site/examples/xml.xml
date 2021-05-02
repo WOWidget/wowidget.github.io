@@ -1,0 +1,38 @@
+<?xml-stylesheet type = "text/xsl" href = "example.xsl" ?>
+<xml>
+  <Number>12345</Number>
+  <Emoji>😃</Emoji>
+  <String><![CDATA[
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  ]]></String>
+  <Objects>
+    <Name attribute="Attribute 1" id="Id 1">Value 1</Name>
+    <Name attribute="Attribute 2" id="Id 2">Value 2</Name>
+    <Name attribute="Attribute 3" id="Id 3">Value 3</Name>
+  </Objects>
+  <Days-and-months>
+    <Days>
+      <Day>Monday</Day>
+      <Day>Tuesday</Day>
+      <Day>Wednesday</Day>
+      <Day>Thursday</Day>
+      <Day>Friday</Day>
+      <Day>Saturday</Day>
+      <Day>Sunday</Day>
+    </Days>
+    <Months>
+      <Month days="31">January</Month>
+      <Month days="28">February</Month>
+      <Month days="31">March</Month>
+      <Month days="30">April</Month>
+      <Month days="31">May</Month>
+      <Month days="30">June</Month>
+      <Month days="31">July</Month>
+      <Month days="31">August</Month>
+      <Month days="30">September</Month>
+      <Month days="31">October</Month>
+      <Month days="30">November</Month>
+      <Month days="31">December</Month>
+    </Months>
+  </Days-and-months>
+</xml>

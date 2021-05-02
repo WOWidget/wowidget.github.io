@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<title>WOWidget WOWLauncher editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="http://localhost:4000/tools/wowlauncher/editor" rel="canonical">
+<meta name="robots" content="all">
+<meta name="description" content="Quickly access critical or interesting information, create widgets from any website or data endpoint and enjoy the data you love via WOWidget.">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<meta name="apple-itunes-app" content="app-id=1515009616,affiliate-data=website">
+<link rel="stylesheet" href="/css/main.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-59GVCYD4SQ"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-59GVCYD4SQ");</script>
+</head>
+<body>
+<style>
+	#apps,
+	#launcher
+	{
+		border: solid 1px #ccc;
+		min-height: 60px;
+
+		display: flex;
+		flex: 1;
+		flex-wrap: wrap;
+	}
+	#apps a,
+	#launcher a
+	{
+		display: inline-block;
+        width: 20%;
+        max-width: 150px;
+	}
+	#apps a img,
+	#launcher a img
+	{
+		display: block;
+        width: 100%;
+        height: auto;
+	}
+</style>
+</head>
+<body>
+<h1>WOWLauncher editor</h1>
+
+<ol>
+    <li>Choose iPhone/iPad model for correct dimensions</li>
+	<li>Drag &amp; drop apps to create your launcher.</li>
+    <li>Once you are done click on <a href="javascript:share();">open in WOWidget</a>.</li>
+</ol>
+
+<p>
+    ⚠️ WOWLauncher currently doesn't work on the <a href="/pages/faq#lock-screen" target="_top">lock screen</a>.
+</p>
+
+<h2>Your launcher</h2>
+
+<p>
+    <select id="model">
+        <option value="0">-- Model --</option>
+        
+        <optgroup label="iPhone">
+            <option value="304">iPhone 5s</option>
+            <option value="359">iPhone 6</option>
+            <option value="398">iPhone 6+</option>
+            <option value="359">iPhone 6s</option>
+            <option value="398">iPhone 6s+</option>
+            <option value="359">iPhone 7</option>
+            <option value="398">iPhone 7+</option>
+            <option value="359">iPhone 8</option>
+            <option value="398">iPhone 8+</option>
+            <option value="398">iPhone 11</option>
+            <option value="359">iPhone 11 Pro</option>
+            <option value="398">iPhone 11 Pro Max</option>
+            <option value="304">iPhone SE 1st</option>
+            <option value="359">iPhone SE 2nd</option>
+            <option value="359">iPhone X</option>
+            <option value="359">iPhone Xs</option>
+            <option value="398">iPhone Xs Max</option>
+            <option value="398">iPhone Xʀ</option>
+        </optgroup>
+
+        <optgroup label="iPad">
+            <option value="556">iPad 5th iOS 12</option>
+            <option value="355">iPad 5th iOS 13</option>
+            <option value="556">iPad 6th iOS 12</option>
+            <option value="355">iPad 6th iOS 13</option>
+            <option value="359">iPad 7th iOS 13</option>
+            <option value="556">iPad Air iOS 12</option>
+            <option value="556">iPad Air 2 iOS 12</option>
+            <option value="355">iPad Air 2 iOS 13</option>
+            <option value="359">iPad Air 3rd iOS 13</option>
+            <option value="556">iPad Mini 2 iOS 12</option>
+            <option value="556">iPad Mini 3 iOS 12</option>
+            <option value="556">iPad Mini 4 iOS 12</option>
+            <option value="336">iPad Mini 4 iOS 13</option>
+            <option value="336">iPad Mini 5th iOS 13</option>
+            <option value="359">iPad Pro 1st 11 iOS 13</option>
+            <option value="359">iPad Pro 2nd 11 iOS 13</option>
+            <option value="672">iPad Pro 2nd 12.9 iOS 12</option>
+            <option value="373">iPad Pro 2nd 12.9 iOS 13</option>
+            <option value="672">iPad Pro 3rd 12.9 iOS 12</option>
+            <option value="373">iPad Pro 3rd 12.9 iOS 13</option>
+            <option value="373">iPad Pro 4th 12.9 iOS 13</option>
+            <option value="556">iPad Pro 9.7 iOS 12</option>
+            <option value="355">iPad Pro 9.7 iOS 13</option>
+            <option value="556">iPad Pro 10.5 iOS 12</option>
+            <option value="359">iPad Pro 10.5 iOS 13</option>
+            <option value="672">iPad Pro 12.9 iOS 12</option>
+            <option value="373">iPad Pro 12.9 iOS 13</option>
+        </optgroup>
+    </select>
+</p>
+
+<div id="launcher"></div>
+
+<h2>Apps</h2>
+<div id="apps">Loading ...</div>
+
+<p>
+	If you can't find an application you are looking for, please <a href="/pages/faq#contact" target="_top">let me know</a>.
+</p>
+
+<script src="https://wowidget.github.io/tools/wowlauncher/sortable.min.js"></script>
+<script>
+
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        
+        if (request.status !== 200) {
+            console.error("Request failed. Status code: " + request.status);
+            return;
+        }
+
+        try {
+            let json = JSON.parse(request.responseText);
+            loadApps(json);
+
+        } catch(e) {
+            console.error("JSON error.\n" + e);
+        }
+    }
+    request.addEventListener("error", () => {
+        console.error("Request failed");
+    });
+
+    try {
+        request.open("GET", "https://wowidget.github.io/tools/wowlauncher/apps.json", true);
+        request.send();
+    } catch(e) {
+        console.error("Request failed");
+    }
+
+    const apps = document.getElementById("apps");
+    const launcher = document.getElementById("launcher");
+
+    function loadApps(json) {
+        apps.innerHTML = "";
+
+        for (let [scheme, app] of Object.entries(json)) {
+            create(scheme, app);
+        };
+
+        new Sortable(apps, {
+            group: "apps",
+            animation: 150,
+            draggable: "a"
+        });
+
+        new Sortable(launcher, {
+            group: "apps",
+            animation: 150,
+            draggable: "a"
+        });
+    }
+
+    function create(scheme, app) {
+        if (!scheme || !app.name || (!app.icon && !app.data)) {
+            return;
+        }
+        let a = document.createElement("a");
+        a.href = scheme;
+        let img = document.createElement("img");
+        if (app.data) {
+            img.src = app.data;
+        } else {
+            img.src = app.icon;
+        }
+        a.appendChild(img);
+        apps.appendChild(a);
+    }
+
+    function getHeight() {
+        return launcher.clientHeight * 1;
+    }
+
+    function share() {
+        let apps = launcher.querySelectorAll("a");
+
+        if (apps.length == 0) {
+            alert("Add apps to launcher.")
+            return
+        }
+
+        var url = "https://wowidget.github.io/tools/wowlauncher/share?";
+        apps.forEach(a => {
+            url += encodeURIComponent(a.href) + ",";
+        });
+        // Remove last comma
+        url = url.substring(0, url.length - 1);
+        let shareUrl = generateShareUrl(url, "WOWLauncher", 1, 0, {"origin": [0,0], "height": getHeight(), "zoom": 1, "javascript": true, "allowInteraction": true, "background": "00000000"});
+
+        window.open(shareUrl, "_blank");
+    }
+
+    function generateShareUrl(url, name, type, slot = 1, config = null) {
+        let u = encodeURIComponent(url);
+        let n = encodeURIComponent(name);
+        var tmp = `u=${u}|n=${n}|t=${type}|s=${slot}`;
+        if (config) {
+            if (typeof config === "object") {
+                config = JSON.stringify(config);
+            }
+            let c = encodeURIComponent(config);
+            tmp += `|c=${c}`;
+        }
+
+        let base64 = btoa(tmp);
+        let chunks = split(base64, 301);
+
+        return "https://wowidget.github.io/share?" + chunks.join("-");
+    }
+
+    function split(string, length) {
+        if (string.length < length) {
+            return [string];
+        }
+        return [string.substring(0, length)].concat(split(string.substring(length), length));
+    }
+
+    document.getElementById("model").onchange = (e) => {
+        const width = parseInt(e.target.value, 10);
+        if (width > 0) {
+            launcher.style.width = `${width}px`;
+        } else {
+            launcher.style.width = "auto";
+        }
+
+    };
+</script>
+
+</body>
+</html>

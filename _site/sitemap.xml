@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://wowidget.github.io/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/app-privacy-policy</loc>
+    <priority>0.80</priority>
+  </url>
+
+<!-- Pages -->
+  <url>
+    <loc>https://wowidget.github.io/pages/time-money-saver</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/pages/safari-share-extension</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/pages/faq</loc>
+    <priority>0.80</priority>
+  </url>
+
+<!-- Use case -->
+  <url>
+    <loc>https://wowidget.github.io/use-case</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/custom</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/news</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/pandemic-statistics</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/product</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/kpi-dashboard</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/stocks</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/weather</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/world-clock</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/exchange-rates</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/json-xml</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/launcher</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/use-case/random-website</loc>
+    <priority>0.64</priority>
+  </url>
+
+<!-- Blog -->
+  <url>
+    <loc>https://wowidget.github.io/blog</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-05-11-story</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-05-28-dimensions</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-06-01-recording-preview</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-06-02-tools</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-06-08-share-url-scheme</loc>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://wowidget.github.io/blog/2020-06-15-easter-eggs</loc>
+    <priority>0.64</priority>
+  </url>
+
+  
+</urlset>

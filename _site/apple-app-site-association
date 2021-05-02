@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "5DQNDS7PUY.com.wowidget",
+                "paths": ["/share/*"]
+            }
+        ]
+    }
+}

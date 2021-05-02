@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<title>WOWidget WOWClock editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="http://localhost:4000/tools/wowclock/editor" rel="canonical">
+<meta name="robots" content="all">
+<meta name="description" content="Quickly access critical or interesting information, create widgets from any website or data endpoint and enjoy the data you love via WOWidget.">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<meta name="apple-itunes-app" content="app-id=1515009616,affiliate-data=website">
+<link rel="stylesheet" href="/css/main.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-59GVCYD4SQ"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-59GVCYD4SQ");</script>
+</head>
+<body>
+<style>
+    input {
+        margin-bottom: 1em;
+    }
+    #editor div {
+        padding: 0 1em 0.5em;
+    }
+    #editor button {
+        margin-left: 1em;
+    }
+</style>
+
+<h1>WOWClock editor</h1>
+<ol>
+    <li>Add as many timezones as you wish</li>
+    <li>Once you are done click on <a href="javascript:share();">open in WOWidget.</a></li>
+</ol>
+
+<p>
+    ⚠️ WOWClock currently doesn't work on the <a href="/pages/faq#lock-screen" target="_top">lock screen</a>.
+</p>
+
+<p>
+    Select a timezone:
+</p>
+<div id="editor">Loading ...</div>
+
+<iframe src="https://wowidget.github.io/tools/wowclock/share" width="100%" height="900" frameborder="0" scrolling="auto"></iframe>
+
+<script>
+    const request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        
+        if (request.status !== 200) {
+            console.error("Request failed. Status code: " + request.status);
+            return;
+        }
+
+        try {
+            const json = JSON.parse(request.responseText);
+            loadTimezones(json);
+
+        } catch(e) {
+            console.error("JSON error.\n" + e);
+        }
+    }
+    request.addEventListener("error", () => {
+        console.error("Request failed");
+    });
+
+    try {
+        request.open("GET", "https://wowidget.github.io/tools/wowclock/timezones.json", true);
+        request.send();
+    } catch(e) {
+        console.error("Request failed");
+    }
+
+    function loadTimezones(timezones) {
+        const editor = document.getElementById("editor");
+        editor.innerHTML = "";
+
+        const input = document.createElement("input");
+        input.setAttribute("list", "timezones");
+        editor.appendChild(input);
+
+        const list = document.createElement("datalist");
+        list.id = "timezones";
+        editor.appendChild(list);
+
+        for (let [name, offset] of Object.entries(timezones)) {
+            let option = document.createElement("option");
+            option.label = name + "|" + offset;
+            option.value = parseIanaName(name) + ` (${offset})`;
+            list.appendChild(option);
+        };
+
+        input.onchange = (e) => {
+            const value = e.target.value;
+            const option = document.querySelector(`option[value="${value}"]`);
+
+            if (option == null) {
+                return;
+            }
+
+            add(option.label);
+            e.target.value = "";
+        };
+    }
+
+    function parseIanaName(ianaName) {
+        return ianaName.split("_").join(" ").replace("/", " - ")
+    }
+
+    function add(value) {
+        const row = document.createElement("div");
+        row.innerHTML = parseIanaName(value.split("|")[0]) + ` (${value.split("|")[1]})`;
+        row.setAttribute("data-value", value);
+        row.setAttribute("data-type", 1);
+        editor.appendChild(row)
+        updateIframe();
+        
+        const type = document.createElement("button");
+        type.innerHTML = "Analog/Digital";
+        row.appendChild(type);
+        type.onclick = e => {
+            const value = e.target.parentNode.getAttribute("data-type");
+            const newValue = (value == 1) ? 0 : 1;
+            e.target.parentNode.setAttribute("data-type", newValue);
+            updateIframe();
+        };
+
+        const remove = document.createElement("button");
+        remove.innerHTML = "Remove"
+        row.appendChild(remove);
+        remove.onclick = e => {
+            const parent = e.target.parentNode;
+            document.getElementById("editor").removeChild(parent);
+            updateIframe();
+        };
+    }
+    
+    function updateIframe() {
+        const timezones = document.querySelectorAll("#editor div");
+        var urlData = [];
+        timezones.forEach(e => {
+            const type = e.getAttribute("data-type");
+            urlData.push(encodeURIComponent(e.getAttribute("data-value") + `|${type}`));
+        });
+        document.querySelector("iframe").src = "https://wowidget.github.io/tools/wowclock/share?" + urlData.join(",");
+    }
+
+    function getHeight(count) {
+        if (count < 1) {
+            return 0;
+        }
+        return (count * 111) - 1;
+    }
+
+    function share() {
+        const timezones = document.querySelectorAll("#editor div");
+
+        if (timezones.length == 0) {
+            alert("Add clock.")
+            return
+        }
+
+        var url = document.querySelector("iframe").src;
+        const shareUrl = generateShareUrl(url, "World clock", 1, 0, {"origin": [0,0], "height": getHeight(timezones.length), "zoom": 1, "javascript": true, "allowInteraction": true, "background": "00000000"});
+
+        window.open(shareUrl, "_blank");
+    }
+
+    function generateShareUrl(url, name, type, slot = 1, config = null) {
+        const u = encodeURIComponent(url);
+        const n = encodeURIComponent(name);
+        var tmp = `u=${u}|n=${n}|t=${type}|s=${slot}`;
+        if (config) {
+            if (typeof config === "object") {
+                config = JSON.stringify(config);
+            }
+            const c = encodeURIComponent(config);
+            tmp += `|c=${c}`;
+        }
+
+        const base64 = btoa(tmp);
+        const chunks = split(base64, 301);
+
+        return "https://wowidget.github.io/share?" + chunks.join("-");
+    }
+
+    function split(string, length) {
+        if (string.length < length) {
+            return [string];
+        }
+        return [string.substring(0, length)].concat(split(string.substring(length), length));
+    }
+</script>
+
+</body>
+</html>

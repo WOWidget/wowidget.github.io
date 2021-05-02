@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<title>WOWidget Share URL tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="http://localhost:4000/tools/wowlauncher/share" rel="canonical">
+<meta name="robots" content="all">
+<meta name="description" content="Quickly access critical or interesting information, create widgets from any website or data endpoint and enjoy the data you love via WOWidget.">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+<meta name="apple-itunes-app" content="app-id=1515009616,affiliate-data=website">
+<link rel="stylesheet" href="/css/main.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-59GVCYD4SQ"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-59GVCYD4SQ");</script>
+</head>
+<body>
+<style>
+    * {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        display: flex;
+        flex: 1;
+        flex-wrap: wrap;
+    }
+    a {
+        display: inline-block;
+        width: 20%;
+        max-width: 150px;
+    }
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+Loading ...
+
+<script>
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        
+        if (request.status !== 200) {
+            console.error("Request failed. Status code: " + request.status);
+            return;
+        }
+
+        try {
+            let json = JSON.parse(request.responseText);
+            loadApps(json);
+        } catch(e) {
+            console.error("JSON error.\n" + e);
+        }
+    }
+    request.addEventListener("error", () => {
+        console.error("Request failed");
+    });
+
+    try {
+        request.open("GET", "https://wowidget.github.io/tools/wowlauncher/apps.json", true);
+        request.send();
+    } catch(e) {
+        console.error("Request failed");
+    }
+
+    function loadApps(json) {
+        let apps = window.location.search.substring(1).split(",");
+
+        if (apps.length <= 1) {
+            document.write("No apps selected.");
+            return;
+        }
+
+        document.body.innerHTML = "";
+
+        apps.forEach(app => {
+            let scheme = decodeURIComponent(app);
+            if (json.hasOwnProperty(scheme)) {
+                create(scheme, json[scheme]);
+            }
+        });
+    }
+
+    function create(scheme, app) {
+        if (!scheme || !app.name || (!app.icon && !app.data)) {
+            return;
+        }
+        let a = document.createElement("a");
+        a.href = scheme;
+        let img = document.createElement("img");
+        if (app.data) {
+            img.src = app.data;
+        } else {
+            img.src = app.icon;
+        }
+        a.appendChild(img);
+        document.body.appendChild(a);
+    }
+</script>
+
+</body>
+</html>

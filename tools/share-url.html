@@ -1,304 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>WOWidget share url encoder</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link href="https://wowidget.github.io/tools/share-url" rel="canonical">
-	<meta name="robots" content="noindex">
-	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59GVCYD4SQ"></script>
-    <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "G-59GVCYD4SQ");</script>
-    <style>
-        label {
-            display: block;
-            margin-bottom: 0.3em;
-        }
-        fieldset {
-            margin: 0.5em 0;
-        }
-        form {
-            margin-bottom: 1em;
-        }
-    </style>
-</head>
-<body>
+---
+layout: default
+title: "Share url encoder"
+---
+    
+<style>
+    label {
+        display: block;
+        margin-bottom: 0.3em;
+    }
+    fieldset {
+        margin: 0.5em 0;
+    }
+    form {
+        margin-bottom: 1em;
+    }
+</style>
 	
-    <h1>WOWidget share url encoder</h1>
+<h1>WOWidget share url encoder</h1>
 
-    <p>
-        <a href="/blog/2020-06-08-share-url-scheme.html">WOWidget share url scheme</a>
-    </p>
+<p>
+    <a href="/blog/2020-06-08-share-url-scheme.html">WOWidget share url scheme</a>
+</p>
 
-    <form>
+<form>
+    <label>
+        Valid URL including scheme: 
+        <input name="url" value="https://">
+    </label>
+
+    <label>
+        Name: 
+        <input name="name">
+    </label>
+
+    <label>
+        Slot: 
+        <select name="slot">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </label>
+
+    <label>
+        Type: 
+        <select name="type">
+            <option value="0">-- Choose --</option>
+            <option value="1">HTML</option>
+            <option value="2">JSON</option>
+            <option value="3">XML</option>
+            <option value="4">Image</option>
+        </select>
+    </label>
+
+    <fieldset id="config-html" style="display:none;">
+        <legend>HTML/Image config</legend>
+        
         <label>
-            Valid URL including scheme: 
-            <input name="url" value="https://">
+            Origin X: <input name="origin.x" type="number" step="0.01" min="0" value="0">
         </label>
 
         <label>
-            Name: 
-            <input name="name">
+            Origin Y: <input name="origin.y" type="number" step="0.01" min="0" value="0">
         </label>
 
         <label>
-            Slot: 
-            <select name="slot">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
+            Height: <input name="height" type="number" step="0.01" min="110" value="110">
         </label>
 
         <label>
-            Type: 
-            <select name="type">
-                <option value="0">-- Choose --</option>
-                <option value="1">HTML</option>
-                <option value="2">JSON</option>
-                <option value="3">XML</option>
-                <option value="4">Image</option>
-            </select>
+            Zoom: <input name="zoom" type="number" step="0.01" min="1" max="10" value="1">
         </label>
 
-        <fieldset id="config-html" style="display:none;">
-            <legend>HTML/Image config</legend>
-            
-            <label>
-                Origin X: <input name="origin.x" type="number" step="0.01" min="0" value="0">
-            </label>
+        Javascript:
+        <label>
+            <input name="javascript" type="radio" value="true" checked="checked"> True
+        </label>
+        <label>
+            <input name="javascript" type="radio" value="false"> False
+        </label>
 
-            <label>
-                Origin Y: <input name="origin.y" type="number" step="0.01" min="0" value="0">
-            </label>
+        Allow interaction:
+        <label>
+            <input name="allowInteraction" type="radio" value="true"> True
+        </label>
+        <label>
+            <input name="allowInteraction" type="radio" value="false" checked="checked"> False
+        </label>
 
-            <label>
-                Height: <input name="height" type="number" step="0.01" min="110" value="110">
-            </label>
+        Background:
+        <label>
+            Color:
+            <input type="color" name="background.color" value="#EFD500">
+        </label>
+        <label>
+            Alpha:
+            <input type="range" name="background.alpha" min="0" max="255" value="255">
+        </label>
+    </fieldset>
 
-            <label>
-                Zoom: <input name="zoom" type="number" step="0.01" min="1" max="10" value="1">
-            </label>
+    <fieldset id="config-json" style="display:none;">
+        <legend>JSON/XML config</legend>
+        <button id="add-field">Add field</button>
+    </fieldset>
 
-            Javascript:
-            <label>
-                <input name="javascript" type="radio" value="true" checked="checked"> True
-            </label>
-            <label>
-                <input name="javascript" type="radio" value="false"> False
-            </label>
+    <button id="generate">Generate share url</button>
+</form>
 
-            Allow interaction:
-            <label>
-                <input name="allowInteraction" type="radio" value="true"> True
-            </label>
-            <label>
-                <input name="allowInteraction" type="radio" value="false" checked="checked"> False
-            </label>
+<div>
+    <mark id="output"></mark>
+</div>
+<br>
 
-            Background:
-            <label>
-                Color:
-                <input type="color" name="background.color" value="#EFD500">
-            </label>
-            <label>
-                Alpha:
-                <input type="range" name="background.alpha" min="0" max="255" value="255">
-            </label>
-        </fieldset>
+<script>
+    document.querySelector("select[name=\"type\"]").onchange = (e) => {
+        const type = parseInt(e.target.value, 10);
+        const htmlConfig = document.getElementById("config-html");
+        const htmlJson = document.getElementById("config-json");
+        switch (type) {
+            case 1:
+            case 4:
+                htmlConfig.style.display = "block";
+                htmlJson.style.display = "none";
+                break;
+            case 2:
+            case 3:
+                htmlConfig.style.display = "none";
+                htmlJson.style.display = "block";
+                break;
+            default:
+                htmlConfig.style.display = "none";
+                htmlJson.style.display = "none";
+        }
+    }
 
-        <fieldset id="config-json" style="display:none;">
-            <legend>JSON/XML config</legend>
-            <button id="add-field">Add field</button>
-        </fieldset>
+    document.getElementById("generate").onclick = (e) => {
+        e.preventDefault();
 
-        <button id="generate">Generate share url</button>
-    </form>
+        const url = document.querySelector("input[name=\"url\"]").value;
+        const name = document.querySelector("input[name=\"name\"]").value;
+        const slot = parseInt(document.querySelector("select[name=\"slot\"]").value, 10);
+        var type = parseInt(document.querySelector("select[name=\"type\"]").value, 10);
 
-    <div>
-        <mark id="output"></mark>
-    </div>
-    <br>
-
-    <a href="https://apps.apple.com/app/apple-store/id1515009616?pt=314498&ct=Website&mt=8" target="_blank"><img src="/images/app-store.png" alt="Download WOWidget from App Store" width="250" height="83"></a>
-
-    <footer>
-        <p>Copyright © 2020 gondo.</p>
-    </footer>
-
-    <script>
-        document.querySelector("select[name=\"type\"]").onchange = (e) => {
-            const type = parseInt(e.target.value, 10);
-            const htmlConfig = document.getElementById("config-html");
-            const htmlJson = document.getElementById("config-json");
-            switch (type) {
-                case 1:
-                case 4:
-                    htmlConfig.style.display = "block";
-                    htmlJson.style.display = "none";
-                    break;
-                case 2:
-                case 3:
-                    htmlConfig.style.display = "none";
-                    htmlJson.style.display = "block";
-                    break;
-                default:
-                    htmlConfig.style.display = "none";
-                    htmlJson.style.display = "none";
-            }
+        if (url == "" || name == "" || type == 0) {
+            alert("Fill in the required values.");
+            return;
         }
 
-        document.getElementById("generate").onclick = (e) => {
-            e.preventDefault();
-
-            const url = document.querySelector("input[name=\"url\"]").value;
-            const name = document.querySelector("input[name=\"name\"]").value;
-            const slot = parseInt(document.querySelector("select[name=\"slot\"]").value, 10);
-            var type = parseInt(document.querySelector("select[name=\"type\"]").value, 10);
-
-            if (url == "" || name == "" || type == 0) {
-                alert("Fill in the required values.");
+        var config = null;
+        switch (type) {
+            case 1:
+            case 4:
+                config = htmlConfig();
+                break;
+            case 2:
+            case 3:
+                config = jsonConfig();
+                break;
+            default:
+                alert("Select corret type.");
                 return;
-            }
-
-            var config = null;
-            switch (type) {
-                case 1:
-                case 4:
-                    config = htmlConfig();
-                    break;
-                case 2:
-                case 3:
-                    config = jsonConfig();
-                    break;
-                default:
-                    alert("Select corret type.");
-                    return;
-            }
-
-            document.getElementById("output").innerHTML = generateShareUrl(url, name, type, slot, config);
         }
 
-        function htmlConfig() {
-            const originX = document.querySelector(`input[name="origin.x"]`).value * 1;
-            const originY = document.querySelector(`input[name="origin.y"]`).value * 1;
-            const height = document.querySelector(`input[name="height"]`).value * 1;
-            const zoom = document.querySelector(`input[name="zoom"]`).value * 1;  
-            const javascript = ("true" == document.querySelector(`input[name="javascript"]:checked`).value);
-            const allowInteraction = ("true" == document.querySelector(`input[name="allowInteraction"]:checked`).value);
-            const color = document.querySelector(`input[name="background.color"]`).value.substring(1);
-            const alpha = (document.querySelector(`input[name="background.alpha"]`).value * 1).toString(16);
-            
-            return {
-                "allowInteraction": allowInteraction,
-                "background": color + alpha.padStart(2, "0"),
-                "height": height,
-                "javascript": javascript,
-                "origin": [originY, originX],
-                "zoom": zoom
-            };
-        }
+        document.getElementById("output").innerHTML = generateShareUrl(url, name, type, slot, config);
+    }
 
-        function jsonConfig() {
-            const area = document.getElementById("config-json");
-            const fieldsets = area.querySelectorAll("fieldset");
+    function htmlConfig() {
+        const originX = document.querySelector(`input[name="origin.x"]`).value * 1;
+        const originY = document.querySelector(`input[name="origin.y"]`).value * 1;
+        const height = document.querySelector(`input[name="height"]`).value * 1;
+        const zoom = document.querySelector(`input[name="zoom"]`).value * 1;  
+        const javascript = ("true" == document.querySelector(`input[name="javascript"]:checked`).value);
+        const allowInteraction = ("true" == document.querySelector(`input[name="allowInteraction"]:checked`).value);
+        const color = document.querySelector(`input[name="background.color"]`).value.substring(1);
+        const alpha = (document.querySelector(`input[name="background.alpha"]`).value * 1).toString(16);
+        
+        return {
+            "allowInteraction": allowInteraction,
+            "background": color + alpha.padStart(2, "0"),
+            "height": height,
+            "javascript": javascript,
+            "origin": [originY, originX],
+            "zoom": zoom
+        };
+    }
 
-            var fields = [];
-            fieldsets.forEach((f) => {
-                const label = f.querySelector(`input[name="label"]`).value;
-                const path = f.querySelector(`input[name="path"]`).value;
-                const color = f.querySelector(`input[type="color"]`).value.substring(1);
-                const alpha = (f.querySelector(`input[type="range"]`).value * 1).toString(16);
+    function jsonConfig() {
+        const area = document.getElementById("config-json");
+        const fieldsets = area.querySelectorAll("fieldset");
 
-                fields.push({
-                    "label": label,
-                    "path": path.split("/"),
-                    "background": color + alpha.padStart(2, "0")
-                });
+        var fields = [];
+        fieldsets.forEach((f) => {
+            const label = f.querySelector(`input[name="label"]`).value;
+            const path = f.querySelector(`input[name="path"]`).value;
+            const color = f.querySelector(`input[type="color"]`).value.substring(1);
+            const alpha = (f.querySelector(`input[type="range"]`).value * 1).toString(16);
+
+            fields.push({
+                "label": label,
+                "path": path.split("/"),
+                "background": color + alpha.padStart(2, "0")
             });
+        });
 
-            return {"fields": fields};
-        }
+        return {"fields": fields};
+    }
 
-        document.getElementById("add-field").onclick = (e) => {
+    document.getElementById("add-field").onclick = (e) => {
+        e.preventDefault();
+
+        const parent = e.target.parentNode;
+
+        const fieldset = document.createElement("fieldset");
+        parent.appendChild(fieldset);
+
+        const label = document.createElement("label");
+        label.innerHTML = "Label: ";
+        fieldset.appendChild(label)
+        const labelInput = document.createElement("input");
+        labelInput.name = "label";
+        label.appendChild(labelInput);
+
+        const path = document.createElement("div");
+        path.innerHTML = "Slash separated path. <small>Example: <code>root/field/1/value</code></small> ";
+        fieldset.appendChild(path);
+        const pathInput = document.createElement("input");
+        pathInput.name = "path";
+        path.appendChild(pathInput);
+
+        const color = document.createElement("label");
+        color.innerHTML = "Color: ";
+        fieldset.appendChild(color);
+        const colorInput = document.createElement("input");
+        colorInput.setAttribute("type", "color");
+        colorInput.value = "#EFD500";
+        color.appendChild(colorInput);
+
+        const alpha = document.createElement("label");
+        alpha.innerHTML = "Alpha: ";
+        fieldset.appendChild(alpha);
+        const alphaInput = document.createElement("input");
+        alphaInput.setAttribute("type", "range");
+        alphaInput.setAttribute("min", 0);
+        alphaInput.setAttribute("max", 255);
+        alphaInput.value = 255;
+        alpha.appendChild(alphaInput);
+
+        const remove = document.createElement("button");
+        remove.innerHTML = "Remove field";
+        fieldset.appendChild(remove)
+        remove.onclick = (e) => {
             e.preventDefault();
+            const fieldset = e.target.closest("fieldset");
+            fieldset.parentNode.removeChild(fieldset);
+        }
+    }
 
-            const parent = e.target.parentNode;
-
-            const fieldset = document.createElement("fieldset");
-            parent.appendChild(fieldset);
-
-            const label = document.createElement("label");
-            label.innerHTML = "Label: ";
-            fieldset.appendChild(label)
-            const labelInput = document.createElement("input");
-            labelInput.name = "label";
-            label.appendChild(labelInput);
-
-            const path = document.createElement("div");
-            path.innerHTML = "Slash separated path. <small>Example: <code>root/field/1/value</code></small> ";
-            fieldset.appendChild(path);
-            const pathInput = document.createElement("input");
-            pathInput.name = "path";
-            path.appendChild(pathInput);
-
-            const color = document.createElement("label");
-            color.innerHTML = "Color: ";
-            fieldset.appendChild(color);
-            const colorInput = document.createElement("input");
-            colorInput.setAttribute("type", "color");
-            colorInput.value = "#EFD500";
-            color.appendChild(colorInput);
-
-            const alpha = document.createElement("label");
-            alpha.innerHTML = "Alpha: ";
-            fieldset.appendChild(alpha);
-            const alphaInput = document.createElement("input");
-            alphaInput.setAttribute("type", "range");
-            alphaInput.setAttribute("min", 0);
-            alphaInput.setAttribute("max", 255);
-            alphaInput.value = 255;
-            alpha.appendChild(alphaInput);
-
-            const remove = document.createElement("button");
-            remove.innerHTML = "Remove field";
-            fieldset.appendChild(remove)
-            remove.onclick = (e) => {
-                e.preventDefault();
-                const fieldset = e.target.closest("fieldset");
-                fieldset.parentNode.removeChild(fieldset);
+    function generateShareUrl(url, name, type, slot = 1, config = null) {
+        const u = encodeURIComponent(url);
+        const n = encodeURIComponent(name);
+        var tmp = `u=${u}|n=${n}|t=${type}|s=${slot}`;
+        if (config) {
+            if (typeof config === "object") {
+                config = JSON.stringify(config);
             }
+            const c = encodeURIComponent(config);
+            tmp += `|c=${c}`;
         }
 
-        function generateShareUrl(url, name, type, slot = 1, config = null) {
-            const u = encodeURIComponent(url);
-            const n = encodeURIComponent(name);
-            var tmp = `u=${u}|n=${n}|t=${type}|s=${slot}`;
-            if (config) {
-                if (typeof config === "object") {
-                    config = JSON.stringify(config);
-                }
-                const c = encodeURIComponent(config);
-                tmp += `|c=${c}`;
-            }
+        const base64 = btoa(tmp);
+        const chunks = split(base64, 301);
 
-            const base64 = btoa(tmp);
-            const chunks = split(base64, 301);
+        return "https://wowidget.github.io/share?" + chunks.join("-");
+    }
 
-            return "https://wowidget.github.io/share?" + chunks.join("-");
+    function split(string, length) {
+        if (string.length < length) {
+            return [string];
         }
-
-        function split(string, length) {
-            if (string.length < length) {
-                return [string];
-            }
-            return [string.substring(0, length)].concat(split(string.substring(length), length));
-        }
-    </script>
-
-</body>
-</html>
+        return [string.substring(0, length)].concat(split(string.substring(length), length));
+    }
+</script>
