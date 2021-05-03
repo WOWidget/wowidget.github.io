@@ -35,12 +35,6 @@ title: "FAQ"
     WatchOS does not allow developers to work with websites. The only solution would be to push snapshots from iPhone. Based on my testing, that is not reliable enough.
 </p>
 
-<h2 id="design">What's up with this website's design?</h2>
-<p>
-    This website applies a <em>no bullshit</em> approach. That means: no ads, no style, no distractions.<br>
-    The product is the app, not a website.
-</p>
-
 <h2 id="contact">Contact?</h2>
 <p>
     Have a question? Or a recommendation? Would you like to help with the translations?<br>

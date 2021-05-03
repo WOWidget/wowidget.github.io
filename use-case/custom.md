@@ -1,9 +1,8 @@
 ---
 layout: use-case
-title: "Create your own"
+title: "Create your own widget"
 ---
 
-<h1>Create your own widget</h1>
 <p>
     You can use WOWidget to turn any website into a widget.<br>
     If you already have your own website, simply open it in the WOWidget app.<br>
